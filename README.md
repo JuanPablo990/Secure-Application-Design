@@ -79,6 +79,6 @@ Gracias a Let's Encrypt, el sitio cuenta con una conexión cifrada reconocida po
 ---
 
 ## 📜 Autor
-**Juan Pablo** - *Estudiante de Ingeniería*
-
-*Basado en los lineamientos del taller de Arquitectura de Seguridad - Escuela Colombiana de Ingeniería Julio Garavito.*
+**Juan Pablo Nieto Cortes**
+*Estudiante de Ingeniería de Sistemas*
+*Escuela Colombiana de Ingeniería Julio Garavito*
