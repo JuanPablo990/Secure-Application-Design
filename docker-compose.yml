@@ -3,6 +3,9 @@ services:
     build: ./backend
     ports:
       - "8443:8443"
+    volumes:
+      # Montamos el certificado real de Let's Encrypt convertido a P12
+      - /home/ec2-user/secure-app.p12:/app/secure-app.p12
     networks:
       - secure-network
 
@@ -11,6 +14,10 @@ services:
     ports:
       - "8080:80"
       - "8444:443"
+    volumes:
+      # Montamos los certificados reales de Let's Encrypt directamente en Apache
+      - /etc/letsencrypt/live/lab-seguro-juanp.duckdns.org/fullchain.pem:/usr/local/apache2/conf/server.crt:ro
+      - /etc/letsencrypt/live/lab-seguro-juanp.duckdns.org/privkey.pem:/usr/local/apache2/conf/server.key:ro
     networks:
       - secure-network
 
