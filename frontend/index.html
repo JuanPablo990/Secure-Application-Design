@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratorio de Seguridad</title>
+    <style>
+        body { font-family: Arial; background-color: #f0f0f0; display: flex; justify-content: center; padding-top: 50px; }
+        .box { background: white; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 400px; }
+        input { width: 90%; margin: 10px 0; padding: 10px; }
+        button { width: 100%; border: none; padding: 10px; background-color: #007bff; color: white; cursor: pointer; border-radius: 5px; }
+        button.logout { background-color: #dc3545; margin-top: 20px; }
+        #msg { color: red; margin-top: 10px; }
+        .hidden { display: none; }
+        .dashboard-content { border-top: 2px solid #eee; margin-top: 20px; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <!-- Sección de Login -->
+    <div id="login-section" class="box">
+        <h3>Login Lab Seguridad</h3>
+        <input type="text" id="user" placeholder="Usuario">
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="doLogin()">Ingresar</button>
+        <p id="msg"></p>
+    </div>
+
+    <!-- Sección de Dashboard (oculta al inicio) -->
+    <div id="dashboard-section" class="box hidden">
+        <h3>Panel de Control Seguro</h3>
+        <p>Bienvenido, <b id="welcome-user"></b>!</p>
+        <div class="dashboard-content">
+            <h4>Datos Confidenciales del Lab:</h4>
+            <ul>
+                <li>Ubicación: Edificio G, Sala 202</li>
+                <li>Key Secreta: <u>LAB-SECURE-2026</u></li>
+                <li>Estado del Servidor: OK (HTTPS Activo)</li>
+            </ul>
+        </div>
+        <button class="logout" onclick="doLogout()">Cerrar Sesión</button>
+    </div>
+
+    <script>
+        async function doLogin() {
+            const user = document.getElementById('user').value;
+            const pass = document.getElementById('pass').value;
+            const msg = document.getElementById('msg');
+
+            try {
+                const resp = await fetch('https://localhost:8443/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    
+                    // Transición al Dashboard
+                    document.getElementById('welcome-user').innerText = data.user;
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('dashboard-section').classList.remove('hidden');
+                } else {
+                    msg.style.color = 'red';
+                    msg.innerText = 'Credenciales inválidas';
+                }
+            } catch (err) {
+                msg.style.color = 'red';
+                msg.innerText = 'Error de conexión con el backend seguro';
+                console.error(err);
+            }
+        }
+
+        function doLogout() {
+            // Regresar al Login
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('user').value = '';
+            document.getElementById('pass').value = '';
+            document.getElementById('msg').innerText = '';
+        }
+    </script>
+</body>
+</html>

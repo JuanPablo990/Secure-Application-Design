@@ -1,0 +1,16 @@
+# Ignorar archivos PDF
+*.pdf
+
+# Ignorar binarios de Maven
+target/
+*.class
+
+# Ignorar archivos de sistema y temporales
+.DS_Store
+Thumbs.db
+
+# Ignorar certificados locales (en AWS se generarán con Certbot)
+# Descomentar si el profesor pide NO subirlos, pero para el lab local suelen dejarlos.
+# backend/src/main/resources/keystore.p12
+# frontend/server.key
+# frontend/server.crt

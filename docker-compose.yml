@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8443:8443"
+    networks:
+      - secure-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+      - "8444:443"
+    networks:
+      - secure-network
+
+networks:
+  secure-network:
+    driver: bridge
